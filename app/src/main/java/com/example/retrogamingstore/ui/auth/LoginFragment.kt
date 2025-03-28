@@ -1,6 +1,7 @@
 package com.example.retrogamingstore.ui.auth
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,8 +63,8 @@ class LoginFragment : Fragment() {
 
                 if (user != null) {
                     when (user.role) {
-                        1 -> findNavController().navigate(R.id.homeFragment)  // Клієнт
-                        2 -> findNavController().navigate(R.id.adminFragment) // Адміністратор
+                        1 -> findNavController().navigate(R.id.action_loginFragment_to_clientFragment)  // Клієнт
+                        2 -> findNavController().navigate(R.id.action_loginFragment_to_adminFragment) // Адміністратор
                         else -> Toast.makeText(requireContext(), "Невідома роль", Toast.LENGTH_SHORT).show()
                     }
                 } else {
@@ -71,6 +72,7 @@ class LoginFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "Помилка авторизації: ${e.message}", Toast.LENGTH_SHORT).show()
+                Log.e("Auth", "${e.message}")
             }
         }
     }

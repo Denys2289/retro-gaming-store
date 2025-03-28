@@ -29,4 +29,6 @@
     <string name="cart_fragment_title">Кошик</string>
     <string name="profile_fragment_title">Профіль</string>
     <string name="admin_fragment_title">Зона адміністратора</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
