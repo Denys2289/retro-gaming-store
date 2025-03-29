@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.retrogamingstore.R
@@ -81,7 +82,14 @@ class AdminHomeFragment : Fragment() {
 
         setupRecyclerView()
         setupAddButton()
+        setupProfileButton()
         observeProducts()
+    }
+
+    private fun setupProfileButton() {
+        binding.btnProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_adminHomeFragment_to_adminProfileFragment)
+        }
     }
 
     private fun setupRecyclerView() {

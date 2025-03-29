@@ -8,7 +8,24 @@
     <fragment
         android:id="@+id/adminHomeFragment"
         android:name="com.example.retrogamingstore.ui.admin.AdminHomeFragment"
-        android:label="Панель адміністратора"
-        tools:layout="@layout/fragment_admin_home" />
+        android:label="fragment_admin_home"
+        tools:layout="@layout/fragment_admin_home">
+        <action
+            android:id="@+id/action_adminHomeFragment_to_adminProfileFragment"
+            app:destination="@id/adminProfileFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/adminProfileFragment"
+        android:name="com.example.retrogamingstore.ui.admin.AdminProfileFragment"
+        android:label="fragment_admin_profile"
+        tools:layout="@layout/fragment_admin_profile" />
+
+    <action
+        android:id="@+id/action_global_to_loginFragment"
+        app:destination="@id/nav_graph"
+        app:popUpTo="@id/admin_nav_graph"
+        app:popUpToInclusive="true" />
+
+    <include app:graph="@navigation/nav_graph" />
 </navigation>
