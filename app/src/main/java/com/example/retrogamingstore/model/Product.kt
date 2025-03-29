@@ -10,7 +10,7 @@ data class Product(
     val name: String,
     val description: String,
     val price: Double,
-    val imageUrl: String,
+    val imagePath: String, // Шлях до зображення у внутрішньому сховищі
     val category: String,
     val condition: String, // Наприклад: "New", "Used - Good", "Used - Fair"
     val inStock: Boolean = true,

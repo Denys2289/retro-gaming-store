@@ -1,5 +1,6 @@
 package com.example.retrogamingstore.ui.adapter
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.retrogamingstore.R
 import com.example.retrogamingstore.model.Product
+import java.io.File
 
 class ProductAdapter(private val onProductClicked: (Product) -> Unit) :
     ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffCallback()) {
@@ -41,13 +43,18 @@ class ProductAdapter(private val onProductClicked: (Product) -> Unit) :
             productPrice.text = "₴${product.price}"
             productCategory.text = product.category
 
-            // Завантаження зображення за допомогою Glide
-            if (product.imageUrl.isNotEmpty()) {
-                Glide.with(itemView.context)
-                    .load(product.imageUrl)
-                    .placeholder(R.drawable.placeholder_game)
-                    .error(R.drawable.placeholder_game)
-                    .into(productImage)
+            // Завантаження зображення
+            if (product.imagePath.isNotEmpty()) {
+                val imageFile = File(product.imagePath)
+                if (imageFile.exists()) {
+                    Glide.with(itemView.context)
+                        .load(imageFile)
+                        .placeholder(R.drawable.placeholder_game)
+                        .error(R.drawable.placeholder_game)
+                        .into(productImage)
+                } else {
+                    productImage.setImageResource(R.drawable.placeholder_game)
+                }
             } else {
                 productImage.setImageResource(R.drawable.placeholder_game)
             }
