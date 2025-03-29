@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.RadioButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -22,8 +21,8 @@ class RegisterFragment : Fragment() {
     private lateinit var usernameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
-    private lateinit var clientRadioButton: RadioButton
-    private lateinit var adminRadioButton: RadioButton
+    private lateinit var confirmPasswordEditText: EditText
+    private lateinit var avatarEditText: EditText
     private lateinit var registerButton: Button
 
     override fun onCreateView(
@@ -36,38 +35,48 @@ class RegisterFragment : Fragment() {
         usernameEditText = view.findViewById(R.id.edittext_username)
         emailEditText = view.findViewById(R.id.edittext_email)
         passwordEditText = view.findViewById(R.id.edittext_password)
-        clientRadioButton = view.findViewById(R.id.radio_client)
-        adminRadioButton = view.findViewById(R.id.radio_admin)
+        confirmPasswordEditText = view.findViewById(R.id.edittext_confirm_password)
         registerButton = view.findViewById(R.id.button_register)
 
         registerButton.setOnClickListener {
-            val username = usernameEditText.text.toString()
-            val email = emailEditText.text.toString()
-            val password = passwordEditText.text.toString()
-            val role = if (clientRadioButton.isChecked) 1 else 2 // 1 - клієнт, 2 - адміністратор
+            val username = usernameEditText.text.toString().trim()
+            val email = emailEditText.text.toString().trim()
+            val password = passwordEditText.text.toString().trim()
+            val confirmPassword = confirmPasswordEditText.text.toString().trim()
 
-            registerUser(username, email, password, role)
+            if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                Toast.makeText(requireContext(), "Заповніть всі поля", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (password != confirmPassword) {
+                Toast.makeText(requireContext(), "Паролі не співпадають", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            registerUser(username, email, password)
         }
 
         return view
     }
 
-    private fun registerUser(username: String, email: String, password: String, role: Int) {
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(requireContext(), "Заповніть всі поля", Toast.LENGTH_SHORT).show()
-            return
-        }
-
+    private fun registerUser(username: String, email: String, password: String) {
         lifecycleScope.launch {
+            val database = AppDatabase.getInstance(requireContext())
+            val userDao = database.userDao()
+
+            val existingUser = withContext(Dispatchers.IO) {
+                userDao.getUserByUsernameOrEmail(username, email)
+            }
+
+            if (existingUser != null) {
+                Toast.makeText(requireContext(), "Користувач із таким логіном або email вже існує", Toast.LENGTH_SHORT).show()
+                return@launch
+            }
+
             withContext(Dispatchers.IO) {
-                val database = AppDatabase.getInstance(requireContext())
-                val user = User(
-                    username = username,
-                    email = email,
-                    password = password,
-                    role = role
-                )
-                database.userDao().insertUser(user)
+                val newUser = User(username = username, email = email, password = password)
+                userDao.insertUser(newUser)
             }
 
             Toast.makeText(requireContext(), "Реєстрація успішна", Toast.LENGTH_SHORT).show()
