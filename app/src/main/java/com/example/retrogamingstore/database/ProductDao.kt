@@ -19,6 +19,9 @@ interface ProductDao {
     @Query("SELECT * FROM products WHERE id = :productId")
     fun getProductById(productId: Long): LiveData<Product>
 
+    @Query("SELECT * FROM products WHERE name LIKE '%' || :query || '%'")
+    fun searchProducts(query: String): LiveData<List<Product>>
+
     @Insert
     suspend fun insert(product: Product): Long
 
