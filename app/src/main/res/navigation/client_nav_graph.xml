@@ -28,4 +28,12 @@
         android:name="com.example.retrogamingstore.ui.main.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" />
+
+    <action
+        android:id="@+id/action_global_to_loginFragment"
+        app:destination="@id/nav_graph"
+        app:popUpTo="@id/client_nav_graph"
+        app:popUpToInclusive="true" />
+
+    <include app:graph="@navigation/nav_graph" />
 </navigation>
