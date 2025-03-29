@@ -62,7 +62,7 @@ class RegisterFragment : Fragment() {
 
     private fun registerUser(username: String, email: String, password: String) {
         lifecycleScope.launch {
-            val database = AppDatabase.getInstance(requireContext())
+            val database = AppDatabase.getDatabase(requireContext())
             val userDao = database.userDao()
 
             val existingUser = withContext(Dispatchers.IO) {

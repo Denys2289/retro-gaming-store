@@ -56,7 +56,7 @@ class LoginFragment : Fragment() {
 
         lifecycleScope.launch {
             try {
-                val database = AppDatabase.getInstance(requireContext())
+                val database = AppDatabase.getDatabase(requireContext())
                 val user = withContext(Dispatchers.IO) {
                     database.userDao().findUser(username, password)
                 }

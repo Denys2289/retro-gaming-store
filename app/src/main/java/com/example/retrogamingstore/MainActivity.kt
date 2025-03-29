@@ -1,4 +1,3 @@
-// app/src/main/java/com/example/retrogamingstore/MainActivity.kt
 package com.example.retrogamingstore
 
 import android.os.Bundle
@@ -11,6 +10,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_main)
 
         val navHostFragment = supportFragmentManager
