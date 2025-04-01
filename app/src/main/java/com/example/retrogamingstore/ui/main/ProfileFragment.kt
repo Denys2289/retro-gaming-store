@@ -13,7 +13,6 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -22,10 +21,12 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupLogoutButton()
+        setupOrderHistoryButton()
     }
 
     private fun setupLogoutButton() {
@@ -36,6 +37,12 @@ class ProfileFragment : Fragment() {
                 finish()
                 startActivity(intent)
             }
+        }
+    }
+
+    private fun setupOrderHistoryButton() {
+        binding.btnOrderHistory.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_orderHistoryFragment)
         }
     }
 
