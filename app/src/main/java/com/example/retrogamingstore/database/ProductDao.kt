@@ -17,7 +17,8 @@ interface ProductDao {
     fun getProductsByCategory(category: String): LiveData<List<Product>>
 
     @Query("SELECT * FROM products WHERE id = :productId")
-    fun getProductById(productId: Long): LiveData<Product>
+    suspend fun getProductById(productId: Long): Product
+
 
     @Query("SELECT * FROM products WHERE name LIKE '%' || :query || '%'")
     fun searchProducts(query: String): LiveData<List<Product>>

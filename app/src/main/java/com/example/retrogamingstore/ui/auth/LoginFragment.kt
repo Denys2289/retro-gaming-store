@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.retrogamingstore.R
 import com.example.retrogamingstore.database.AppDatabase
+import com.example.retrogamingstore.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -57,11 +58,15 @@ class LoginFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 val database = AppDatabase.getDatabase(requireContext())
+                val userRepository = UserRepository(database.userDao(), requireContext())
+
                 val user = withContext(Dispatchers.IO) {
-                    database.userDao().findUser(username, password)
+                    userRepository.getUserByUsernameAndPassword(username, password)
                 }
 
                 if (user != null) {
+                    userRepository.saveCurrentUser(user) // Збереження користувача
+
                     when (user.role) {
                         1 -> findNavController().navigate(R.id.action_loginFragment_to_clientFragment)  // Клієнт
                         2 -> findNavController().navigate(R.id.action_loginFragment_to_adminFragment) // Адміністратор
@@ -76,4 +81,5 @@ class LoginFragment : Fragment() {
             }
         }
     }
+
 }

@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.retrogamingstore.R
 import com.example.retrogamingstore.databinding.FragmentCartBinding
 import com.example.retrogamingstore.ui.adapter.CartAdapter
+import com.example.retrogamingstore.ui.viewmodel.CartViewModel
 
 class CartFragment : Fragment() {
     private var _binding: FragmentCartBinding? = null
@@ -79,11 +82,7 @@ class CartFragment : Fragment() {
         }
 
         binding.btnCheckout.setOnClickListener {
-            // Тут буде реалізована логіка оформлення замовлення
-            // Для прикладу просто показуємо повідомлення
-            binding.textOrderStatus.visibility = View.VISIBLE
-            binding.textOrderStatus.text = "Замовлення оформлено!"
-            cartViewModel.clearCart()
+            findNavController().navigate(R.id.action_cartFragment_to_checkoutFragment)
         }
     }
 

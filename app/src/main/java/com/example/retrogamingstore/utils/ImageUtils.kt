@@ -62,4 +62,18 @@ object ImageUtils {
             false
         }
     }
+
+    fun loadImageFromInternalStorage(context: Context, imagePath: String): Bitmap? {
+        return try {
+            val file = File(imagePath)
+            if (file.exists()) {
+                android.graphics.BitmapFactory.decodeFile(file.absolutePath)
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 }

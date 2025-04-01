@@ -35,7 +35,7 @@ class CartAdapter(
         itemView: View,
         private val onIncrement: (Long) -> Unit,
         private val onDecrement: (Long) -> Unit,
-        private val onRemove: (Product) -> Unit
+        private val onRemove: (Product) -> Unit,
     ) : RecyclerView.ViewHolder(itemView) {
 
         private val productImage: ImageView = itemView.findViewById(R.id.cart_product_image)
@@ -67,7 +67,7 @@ class CartAdapter(
                 productImage.setImageResource(R.drawable.placeholder_game)
             }
 
-            // Встановлення обробників кліків
+            // Встановлення обробників кліків на кнопки
             btnIncrement.setOnClickListener {
                 onIncrement(product.id)
             }

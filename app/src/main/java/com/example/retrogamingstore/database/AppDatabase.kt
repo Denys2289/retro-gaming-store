@@ -4,19 +4,25 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.retrogamingstore.model.CartItem
+import com.example.retrogamingstore.model.Order
+import com.example.retrogamingstore.model.OrderItem
 import com.example.retrogamingstore.model.Product
 import com.example.retrogamingstore.model.User
+import com.example.retrogamingstore.utils.DateConverter
 
 @Database(
-    entities = [User::class, Product::class, CartItem::class],
+    entities = [User::class, Product::class, CartItem::class, Order::class, OrderItem::class],
     version = 1,
     exportSchema = false
 )
+@TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun productDao(): ProductDao
     abstract fun cartDao(): CartDao
+    abstract fun orderDao(): OrderDao
 
     companion object {
         @Volatile
@@ -27,8 +33,9 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "retro_gaming_db"
-                ).build()
+                    "retro_gaming_store_database"
+                )
+                    .build()
                 INSTANCE = instance
                 instance
             }
