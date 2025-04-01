@@ -7,14 +7,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.retrogamingstore.R
 import com.example.retrogamingstore.database.AppDatabase
 import com.example.retrogamingstore.databinding.FragmentOrderHistoryBinding
 import com.example.retrogamingstore.repository.OrderRepository
 import com.example.retrogamingstore.repository.UserRepository
-import com.example.retrogamingstore.ui.adapters.OrderAdapter
+import com.example.retrogamingstore.ui.adapter.OrderAdapter
 import kotlinx.coroutines.launch
 
 class OrderHistoryFragment : Fragment() {

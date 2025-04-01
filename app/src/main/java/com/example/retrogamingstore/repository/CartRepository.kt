@@ -41,7 +41,25 @@ class CartRepository(
     suspend fun clearCart(userId: Long) {
         cartDao.clearCart(userId)
     }
+    suspend fun incrementQuantity(productId: Long, userId: Long) {
+        val cartItem = cartDao.getCartItemByProductAndUser(productId, userId)
+        if (cartItem != null) {
+            cartDao.updateQuantity(cartItem.id, cartItem.quantity + 1)
+        }
+    }
 
+    suspend fun getCartItemByProductId(productId: Long, userId: Long): CartItem? {
+        return cartDao.getCartItemByProductAndUser(productId, userId)
+    }
+
+    suspend fun decrementQuantity(productId: Long, userId: Long) {
+        val cartItem = cartDao.getCartItemByProductAndUser(productId, userId)
+        if (cartItem != null && cartItem.quantity > 1) {
+            cartDao.updateQuantity(cartItem.id, cartItem.quantity - 1)
+        } else if (cartItem != null && cartItem.quantity == 1) {
+            cartDao.delete(cartItem.id)
+        }
+    }
     fun getCartItemsByUser(userId: Long): LiveData<List<CartItem>> {
         return cartDao.getCartItemsByUser(userId)
     }

@@ -1,4 +1,4 @@
-package com.example.retrogamingstore.ui.adapters
+package com.example.retrogamingstore.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View

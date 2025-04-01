@@ -46,7 +46,7 @@ class CartFragment : Fragment() {
         cartAdapter = CartAdapter(
             onIncrement = { productId -> cartViewModel.incrementQuantity(productId) },
             onDecrement = { productId -> cartViewModel.decrementQuantity(productId) },
-            onRemove = { product -> cartViewModel.removeFromCart(product) }
+            onRemove = { productId -> cartViewModel.removeProductFromCart(productId) }
         )
 
         binding.recyclerViewCart.apply {
@@ -56,9 +56,9 @@ class CartFragment : Fragment() {
     }
 
     private fun observeData() {
-        cartViewModel.cartProducts.observe(viewLifecycleOwner) { products ->
-            cartAdapter.submitList(products)
-            updateEmptyView(products.isEmpty())
+        cartViewModel.cartProducts.observe(viewLifecycleOwner) { cartProducts ->
+            cartAdapter.submitList(cartProducts)
+            updateEmptyView(cartProducts.isEmpty())
         }
 
         cartViewModel.totalPrice.observe(viewLifecycleOwner) { totalPrice ->

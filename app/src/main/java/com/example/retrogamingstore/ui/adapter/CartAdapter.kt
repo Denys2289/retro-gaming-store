@@ -17,7 +17,7 @@ import java.io.File
 class CartAdapter(
     private val onIncrement: (Long) -> Unit,
     private val onDecrement: (Long) -> Unit,
-    private val onRemove: (Product) -> Unit
+    private val onRemove: (Long) -> Unit
 ) : ListAdapter<Product, CartAdapter.CartViewHolder>(CartDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
@@ -35,7 +35,7 @@ class CartAdapter(
         itemView: View,
         private val onIncrement: (Long) -> Unit,
         private val onDecrement: (Long) -> Unit,
-        private val onRemove: (Product) -> Unit,
+        private val onRemove: (Long) -> Unit,
     ) : RecyclerView.ViewHolder(itemView) {
 
         private val productImage: ImageView = itemView.findViewById(R.id.cart_product_image)
@@ -77,7 +77,7 @@ class CartAdapter(
             }
 
             btnRemove.setOnClickListener {
-                onRemove(product)
+                onRemove(product.id)
             }
         }
     }
