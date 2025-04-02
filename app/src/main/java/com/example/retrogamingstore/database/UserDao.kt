@@ -10,7 +10,11 @@ import com.example.retrogamingstore.model.User
 interface UserDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insertUser(user: User)
+// Додайте ці методи до вашого UserDao.kt
 
+
+    @Query("UPDATE users SET password = :newPassword WHERE id = :userId")
+    suspend fun updateUserPassword(userId: Int, newPassword: String)
     @Query("SELECT id FROM users LIMIT 1")
     suspend fun getCurrentUserId(): Int?
 

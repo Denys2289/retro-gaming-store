@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.retrogamingstore.database.OrderDao
 import com.example.retrogamingstore.model.Order
 import com.example.retrogamingstore.model.OrderItem
+import com.example.retrogamingstore.model.OrderItemWithProduct
 
 class OrderRepository(private val orderDao: OrderDao) {
 
@@ -11,6 +12,9 @@ class OrderRepository(private val orderDao: OrderDao) {
         return orderDao.insertOrder(order)
     }
 
+    suspend fun getOrderItemsWithProducts(orderId: Long): List<OrderItemWithProduct> {
+        return orderDao.getOrderItemsWithProducts(orderId)
+    }
     suspend fun insertOrderItems(orderItems: List<OrderItem>) {
         orderDao.insertOrderItems(orderItems)
     }

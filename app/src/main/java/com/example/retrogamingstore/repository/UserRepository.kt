@@ -24,13 +24,24 @@ class UserRepository(private val userDao: UserDao, context: Context) {
             .putInt("role", user.role)
             .apply()
     }
-
-    fun clearCurrentUser() {
-        sharedPreferences.edit().clear().apply()
+    suspend fun updateUserPassword(userId: Int, newPassword: String) {
+        userDao.updateUserPassword(userId, newPassword)
     }
+
+
 
     suspend fun getUserById(userId: Int): User? {
         return userDao.getUserById(userId)
+    }
+
+    suspend fun clearCurrentUser() {
+        sharedPreferences.edit().clear().apply()
+    }
+
+
+    suspend fun getCurrentUser(): User? {
+        val userId = getCurrentUserId() ?: return null
+        return getUserById(userId)
     }
 
     suspend fun getUserByUsernameOrEmail(username: String, email: String): User? {

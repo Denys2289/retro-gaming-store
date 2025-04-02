@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.retrogamingstore.R
 import com.example.retrogamingstore.database.AppDatabase
 import com.example.retrogamingstore.databinding.FragmentOrderHistoryBinding
 import com.example.retrogamingstore.repository.OrderRepository
@@ -45,12 +47,14 @@ class OrderHistoryFragment : Fragment() {
 
     private fun setupRecyclerView() {
         orderAdapter = OrderAdapter { order ->
-            // При натисканні на замовлення можна додати дію відкриття деталей
-            // Наприклад, будемо виводити тост з ID замовлення
-            Toast.makeText(requireContext(), "Замовлення #${order.id}", Toast.LENGTH_SHORT).show()
-
-            // Тут можна додати навігацію до деталей замовлення
-            // findNavController().navigate(...)
+            // Замість виведення тосту переходимо до фрагменту деталей
+            val bundle = Bundle().apply {
+                putLong("order_id", order.id)
+            }
+            findNavController().navigate(
+                R.id.action_orderHistoryFragment_to_orderDetailsFragment,
+                bundle
+            )
         }
 
         binding.recyclerOrders.apply {

@@ -4,11 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/client_nav_graph"
     app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.example.retrogamingstore.ui.main.OrderDetailsFragment"
+        android:label="OrderDetailsFragment"
+        tools:layout="@layout/fragment_order_details">
+        <argument
+            android:name="order_id"
+            app:argType="long" />
+    </fragment>
+
     <fragment
         android:id="@+id/orderHistoryFragment"
         android:name="com.example.retrogamingstore.ui.main.OrderHistoryFragment"
         android:label="OrderHistoryFragment"
-        tools:layout="@layout/fragment_order_history" />
+        tools:layout="@layout/fragment_order_history">
+        <action
+            android:id="@+id/action_orderHistoryFragment_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+    </fragment>
 
     <action
         android:id="@+id/action_profileFragment_to_orderHistoryFragment"

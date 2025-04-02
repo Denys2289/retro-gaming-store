@@ -10,6 +10,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.example.retrogamingstore.model.Order
 import com.example.retrogamingstore.model.OrderItem
+import com.example.retrogamingstore.model.OrderItemWithProduct
 import com.example.retrogamingstore.model.OrderWithDetails
 
 @Dao
@@ -41,6 +42,8 @@ interface OrderDao {
     suspend fun getOrderById(orderId: Long): Order
     // Якщо потрібен окремий метод для отримання всіх елементів
 
+    @Query("SELECT * FROM order_items WHERE orderId = :orderId")
+    suspend fun getOrderItemsWithProducts(orderId: Long): List<OrderItemWithProduct>
     // Має бути так:
     @Query("SELECT * FROM order_items WHERE orderId = :orderId")
     suspend fun getOrderItemsByOrderId(orderId: Long): List<OrderItem>
