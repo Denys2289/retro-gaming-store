@@ -9,11 +9,15 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.retrogamingstore.R
 import com.example.retrogamingstore.database.AppDatabase
+import com.example.retrogamingstore.repository.CartRepository
 import com.example.retrogamingstore.repository.UserRepository
+import com.example.retrogamingstore.ui.viewmodel.CartViewModel
+import com.example.retrogamingstore.ui.viewmodel.CartViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -67,6 +71,24 @@ class LoginFragment : Fragment() {
                 if (user != null) {
                     userRepository.saveCurrentUser(user) // Збереження користувача
 
+                    // Повідомляємо CartViewModel про зміну користувача
+                    try {
+                        // Використовуємо правильну фабрику для створення CartViewModel
+                        val database = AppDatabase.getDatabase(requireContext())
+                        val cartRepository = CartRepository(database.cartDao(), database.productDao())
+
+                        val viewModelFactory = CartViewModelFactory(cartRepository, userRepository)
+
+                        // Використовуємо viewLifecycleOwner для фрагмента або activity для активності
+                        val cartViewModel = activity?.let {
+                            ViewModelProvider(it, viewModelFactory).get(CartViewModel::class.java)
+                        }
+
+                        cartViewModel?.onUserChanged()
+                    } catch (e: Exception) {
+                        Log.e("Login", "Помилка при оновленні CartViewModel: ${e.message}")
+                    }
+
                     when (user.role) {
                         1 -> findNavController().navigate(R.id.action_loginFragment_to_clientFragment)  // Клієнт
                         2 -> findNavController().navigate(R.id.action_loginFragment_to_adminFragment) // Адміністратор
@@ -81,5 +103,4 @@ class LoginFragment : Fragment() {
             }
         }
     }
-
 }

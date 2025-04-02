@@ -18,6 +18,17 @@
         <item name="materialButtonStyle">@style/RetroGamingButton</item>
     </style>
 
+    <style name="BottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:elevation">16dp</item>
+        <item name="behavior_peekHeight">256dp</item>
+        <item name="behavior_hideable">true</item>
+    </style>
+
     <!-- Кастомний стиль для кнопок -->
     <style name="RetroGamingButton" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/primary</item>

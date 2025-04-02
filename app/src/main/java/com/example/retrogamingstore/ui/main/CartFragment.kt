@@ -9,9 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.retrogamingstore.R
+import com.example.retrogamingstore.database.AppDatabase
 import com.example.retrogamingstore.databinding.FragmentCartBinding
+import com.example.retrogamingstore.repository.CartRepository
+import com.example.retrogamingstore.repository.UserRepository
 import com.example.retrogamingstore.ui.adapter.CartAdapter
 import com.example.retrogamingstore.ui.viewmodel.CartViewModel
+import com.example.retrogamingstore.ui.viewmodel.CartViewModelFactory
 
 class CartFragment : Fragment() {
     private var _binding: FragmentCartBinding? = null
@@ -39,7 +43,15 @@ class CartFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        cartViewModel = ViewModelProvider(requireActivity())[CartViewModel::class.java]
+        val cartDao = AppDatabase.getDatabase(requireContext()).cartDao()
+        val productDao = AppDatabase.getDatabase(requireContext()).productDao()
+        val userDao = AppDatabase.getDatabase(requireContext()).userDao()
+
+        val cartRepository = CartRepository(cartDao, productDao)
+        val userRepository = UserRepository(userDao, requireContext())
+
+        val factory = CartViewModelFactory(cartRepository, userRepository)
+        cartViewModel = ViewModelProvider(requireActivity(), factory)[CartViewModel::class.java]
     }
 
     private fun setupRecyclerView() {

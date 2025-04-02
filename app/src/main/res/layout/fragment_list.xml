@@ -27,4 +27,40 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:listitem="@layout/item_product" />
 
+    <!-- Пустий стан коли немає результатів пошуку -->
+    <LinearLayout
+        android:id="@+id/emptyStateLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_search_empty"
+            android:contentDescription="Немає результатів" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Немає товарів за вашим запитом"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Спробуйте змінити пошуковий запит або фільтри"
+            android:textSize="14sp" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
