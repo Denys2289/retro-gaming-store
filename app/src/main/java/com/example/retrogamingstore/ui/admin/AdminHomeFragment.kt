@@ -83,12 +83,19 @@ class AdminHomeFragment : Fragment() {
         setupRecyclerView()
         setupAddButton()
         setupProfileButton()
+        setupManageOrdersButton()
         observeProducts()
     }
 
     private fun setupProfileButton() {
         binding.btnProfile.setOnClickListener {
             findNavController().navigate(R.id.action_adminHomeFragment_to_adminProfileFragment)
+        }
+    }
+
+    private fun setupManageOrdersButton() {
+        binding.btnManageOrders.setOnClickListener {
+            findNavController().navigate(R.id.action_adminHomeFragment_to_adminOrdersListFragment)
         }
     }
 

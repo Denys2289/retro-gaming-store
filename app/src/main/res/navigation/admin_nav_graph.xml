@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_adminHomeFragment_to_adminProfileFragment"
             app:destination="@id/adminProfileFragment" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_adminOrdersListFragment"
+            app:destination="@id/adminOrdersListFragment" />
     </fragment>
 
     <fragment
@@ -20,6 +23,26 @@
         android:name="com.example.retrogamingstore.ui.admin.AdminProfileFragment"
         android:label="fragment_admin_profile"
         tools:layout="@layout/fragment_admin_profile" />
+
+    <fragment
+        android:id="@+id/adminOrdersListFragment"
+        android:name="com.example.retrogamingstore.ui.admin.AdminOrdersListFragment"
+        android:label="fragment_admin_orders_list"
+        tools:layout="@layout/fragment_admin_orders_list">
+        <action
+            android:id="@+id/action_adminOrdersListFragmentToAdminOrderDetailsFragment"
+            app:destination="@id/adminOrderDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminOrderDetailsFragment"
+        android:name="com.example.retrogamingstore.ui.admin.AdminOrderDetailsFragment"
+        android:label="fragment_admin_order_details"
+        tools:layout="@layout/fragment_admin_order_details">
+        <argument
+            android:name="orderId"
+            app:argType="long" />
+    </fragment>
 
     <action
         android:id="@+id/action_global_to_loginFragment"
