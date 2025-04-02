@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.retrogamingstore.R
 import com.example.retrogamingstore.database.AppDatabase
@@ -156,7 +157,9 @@ class ProfileFragment : Fragment() {
 
     private fun setupOrderHistoryButton() {
         binding.btnOrderHistory.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_orderHistoryFragment)
+            findNavController().navigate(R.id.orderHistoryFragment, null, NavOptions.Builder()
+                .build())
+
         }
     }
 

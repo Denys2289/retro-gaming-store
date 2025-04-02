@@ -26,6 +26,15 @@ class ClientFragment : Fragment() {
             .findFragmentById(R.id.client_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.profileFragment, R.id.orderHistoryFragment, R.id.orderDetailsFragment -> bottomNavigationView.menu.findItem(R.id.profileFragment).isChecked = true
+                R.id.homeFragment -> bottomNavigationView.menu.findItem(R.id.homeFragment).isChecked = true
+                R.id.listFragment -> bottomNavigationView.menu.findItem(R.id.listFragment).isChecked = true
+                R.id.cartFragment, R.id.checkoutFragment -> bottomNavigationView.menu.findItem(R.id.cartFragment).isChecked = true
+            }
+        }
+
         bottomNavigationView.setupWithNavController(navController)
 
         return view
