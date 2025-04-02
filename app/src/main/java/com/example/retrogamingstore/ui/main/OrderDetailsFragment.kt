@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.retrogamingstore.database.AppDatabase
 import com.example.retrogamingstore.databinding.FragmentOrderDetailsBinding
@@ -50,6 +51,11 @@ class OrderDetailsFragment : Fragment() {
 
         setupRecyclerView()
         loadOrderDetails()
+
+        // Додаємо обробник натискання на кнопку назад у Toolbar
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun setupRecyclerView() {

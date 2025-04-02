@@ -43,6 +43,10 @@ class OrderHistoryFragment : Fragment() {
 
         setupRecyclerView()
         loadOrders()
+
+        binding.buttonBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun setupRecyclerView() {
