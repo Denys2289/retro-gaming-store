@@ -32,4 +32,10 @@ class AdminViewModel(application: Application) : AndroidViewModel(application) {
             productDao.delete(product)
         }
     }
+
+    fun softDeleteProduct(productId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            productDao.softDelete(productId)
+        }
+    }
 }

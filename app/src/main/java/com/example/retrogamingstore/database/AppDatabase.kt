@@ -5,6 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.retrogamingstore.database.CartDao
 import com.example.retrogamingstore.database.OrderDao
 import com.example.retrogamingstore.data.dao.OrderItemDao
@@ -19,7 +21,7 @@ import com.example.retrogamingstore.utils.DateConverter
 
 @Database(
     entities = [User::class, Product::class, CartItem::class, Order::class, OrderItem::class],
-    version = 1,
+    version = 2, // Оновлена версія бази даних
     exportSchema = false
 )
 @TypeConverters(DateConverter::class)
@@ -35,13 +37,23 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
+        // Міграція з версії 1 на версію 2: додаємо поле isDeleted до таблиці products
+        private val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Додаємо новий стовпець із значенням за замовчуванням 0 (false)
+                database.execSQL("ALTER TABLE products ADD COLUMN isDeleted INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "retro_gaming_db"
-                ).build()
+                )
+                    .addMigrations(MIGRATION_1_2) // Додаємо міграцію
+                    .build()
                 INSTANCE = instance
                 instance
             }

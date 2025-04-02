@@ -19,5 +19,6 @@ data class Product(
     val inStock: Boolean = true,
     val quantity: Int = 1,
     val releaseYear: Int? = null,
-    val manufacturer: String? = null
+    val manufacturer: String? = null,
+    val isDeleted: Boolean = false // Нове поле для м'якого видалення
 ) : Parcelable
